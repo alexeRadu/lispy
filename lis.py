@@ -1,3 +1,20 @@
+import math
+import operator as op
+
+
+def standard_env():
+	"An environment with some Lisp standard procedures."
+	env = dict()
+	env.update(vars(math))
+	env.update({
+		'+': op.add,
+		'-': op.sub,
+		'*': op.mul
+	})
+	return env
+
+global_env = standard_env()
+
 def tokenize(chars):
 	"Convert a string of characters into a list of tokens."
 	return chars.replace('(', ' ( ').replace(')', ' ) ').split()
@@ -42,3 +59,4 @@ program = "\
 print program
 print tokenize(program)
 print parse(program)
+print global_env
