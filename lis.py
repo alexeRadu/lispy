@@ -50,6 +50,24 @@ def parse(program):
 	"Read a Lisp expression from a string."
 	return read_from_tokens(tokenize(program))
 
+def eval(x, env=global_env):
+	"Evaluate an expression in an environment."
+	if isinstance(x, str):		# variable reference
+		return env[x]
+	elif not isinstance(x, list):	# constant literal
+		return x
+	elif x[0] == 'if':		# conditional
+		(_, test, conseq, alt) = x
+		exp = (conseq if eval(test, env) else alt)
+		return eval(exp, env)
+	elif x[0] == 'define':		# definition
+		(_, var, exp) = x
+		env[var] = eval(exp, env)
+	else:				# procedure call
+		proc = eval(x[0], env)
+		args = [eval(arg, env) for arg in x[1:]]
+		return proc(*args)
+
 program = "\
 (begin\
 	(define r 10)\
@@ -60,3 +78,4 @@ print program
 print tokenize(program)
 print parse(program)
 print global_env
+print eval(parse('(+ 1 (* 2 3))'))
