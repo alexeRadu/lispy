@@ -68,14 +68,11 @@ def eval(x, env=global_env):
 		args = [eval(arg, env) for arg in x[1:]]
 		return proc(*args)
 
-program = "\
-(begin\
-	(define r 10)\
-	(* pi (* r r)))"
+def repl(prompt='lis.py> '):
+	"A prompt-read-eval-print loop."
+	while True:
+		val = eval(parse(raw_input(prompt)))
+		if val is not None:
+			print str(val)
 
-
-print program
-print tokenize(program)
-print parse(program)
-print global_env
-print eval(parse('(+ 1 (* 2 3))'))
+repl()
