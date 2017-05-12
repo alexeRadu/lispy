@@ -1,6 +1,6 @@
 # A simple Lisp interpreter written in python
 
-This is based on the tutorial found [here](norvig.com/lispy.html).
+This is based on the tutorial found [here](http://norvig.com/lispy.html).
 
 The purpose for making this tutorial was two fold:
  * an introduction into lisp
